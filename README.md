@@ -1,3 +1,11 @@
+# Introducing Throughput buckets
+Throughput buckets help manage resource consumption for workloads sharing a Cosmos DB container by limiting the maximum throughput a bucket can consume.
+- Each bucket has a maximum throughput percentage, capping the fraction of the container’s total throughput that it can consume.
+- Requests assigned to a bucket can consume throughput only up to this limit.
+- If the bucket exceeds its configured limit, subsequent requests are throttled.
+- This mechanism helps in preventing resource contention, ensuring that no single workload consumes excessive throughput and impacts others.
+
+Read the [official documentation](https://learn.microsoft.com/azure/cosmos-db/nosql/throughput-buckets) to learn more.
 # Cosmos DB Throughput Buckets Quickstart
 
 This repository provides quickstart samples for using the **Throughput Buckets** feature in Azure Cosmos DB, demonstrating both request-level and bulk API usage. The samples are designed to help you understand and test how throughput buckets can be leveraged for high-throughput, cost-efficient workloads.
@@ -56,8 +64,8 @@ Reads/sec: 5000, Reads Throttled/sec: 0, Inserts/sec: 1000, Inserts Throttled/se
 - Configure all parameters in `App.config` for easy experimentation
 - Monitor throttling and adjust workload or Cosmos DB RU/s as needed
 
-## Contributing
-Pull requests and issues are welcome! Please open an issue if you have questions or suggestions.
-
 ## License
 MIT
+
+## Contributing
+Pull requests and issues are welcome! Please open an issue if you have questions or suggestions.
