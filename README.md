@@ -52,18 +52,6 @@ The samples will print per-second statistics to the console, such as:
 Reads/sec: 5000, Reads Throttled/sec: 0, Inserts/sec: 1000, Inserts Throttled/sec: 0
 ```
 
-## Project Structure
-- `ThroughputBucketBulkQuickstart.cs` — Demonstrates bulk API usage with throughput buckets
-- `ThroughputBucketQuickstart.cs` — Demonstrates request-level throughput bucket usage
-- `CosmosDbService.cs` — Shared service logic for Cosmos DB operations
-- `App.config` — All configuration values
-- `Product.cs` — Model for product documents
-
-## Best Practices
-- Use separate files for each sample for clarity and maintainability
-- Configure all parameters in `App.config` for easy experimentation
-- Monitor throttling and adjust workload or Cosmos DB RU/s as needed
-
 ## License
 MIT
 

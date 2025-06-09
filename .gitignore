@@ -7,6 +7,7 @@ obj/
 [Ll]og/
 [Bb]uild/
 [Bb]uild[Ll]og.*
+bin/[Dd]ebug/*
 
 # User-specific files
 *.user
