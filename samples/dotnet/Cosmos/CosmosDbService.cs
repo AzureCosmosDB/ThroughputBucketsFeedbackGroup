@@ -65,7 +65,7 @@ namespace Cosmos
 				if (response.Count > 0)
 				{
 					var obj = response.First();
-					maxId = obj["maxId"];
+					maxId = (int)obj["maxId"];
 				}
 			}
 			return maxId;

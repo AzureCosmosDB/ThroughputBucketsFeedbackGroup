@@ -6,7 +6,6 @@ namespace Cosmos
 	public class Product
 	{
 		public string id { get; set; }
-		public int Id { get; set; }
 		public string Type { get; set; }
 		public string Brand { get; set; }
 		public string Name { get; set; }
@@ -35,7 +34,6 @@ namespace Cosmos
 			return new Product
 			{
 				id = id.ToString(),
-				Id = id,
 				Type = faker.PickRandom(TypeList),
 				Brand = faker.Company.CompanyName(),
 				Name = faker.Commerce.ProductName(),
