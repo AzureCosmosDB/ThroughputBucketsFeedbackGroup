@@ -27,7 +27,7 @@ namespace Config
                 TotalCreates = int.Parse(ConfigurationManager.AppSettings["TotalCreates"]),
                 MaxReadConcurrency = int.Parse(ConfigurationManager.AppSettings["MaxReadConcurrency"]),
                 MaxQueryConcurrency = int.Parse(ConfigurationManager.AppSettings["MaxQueryConcurrency"]),
-                MaxInsertConcurrency = int.Parse(ConfigurationManager.AppSettings["MaxInsertConcurrency"]),
+                MaxInsertConcurrency = int.Parse(ConfigurationManager.AppSettings["MaxBulkInsertConcurrency"]),
                 RunDurationInSecs = int.Parse(ConfigurationManager.AppSettings["RunDurationInSecs"])
             };
         }

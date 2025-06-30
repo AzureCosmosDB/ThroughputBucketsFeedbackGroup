@@ -15,7 +15,7 @@ namespace Quickstarts
             // === User Prompts ===
             int uploadChoice = PromptForYesNo("Do you want to upload data to Cosmos DB container? \nEnter 1 for Yes, 0 for No: ");
             if (uploadChoice == 1)
-                await loadExecutor.UploadProductsFromFileAsync("data/products.json", config.MaxInsertConcurrency);
+                await loadExecutor.UploadProductsFromFileAsync("data/products.json");
             else
                 Console.WriteLine("[Info] Skipping data upload.");
 

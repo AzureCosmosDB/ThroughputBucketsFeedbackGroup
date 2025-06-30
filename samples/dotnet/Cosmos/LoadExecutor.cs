@@ -133,7 +133,7 @@ namespace Cosmos
             Console.WriteLine($"Bulk insert completed for {totalDocs} documents.");
         }
 
-        public async Task UploadProductsFromFileAsync(string filePath, int maxConcurrency = 100)
+        public async Task UploadProductsFromFileAsync(string filePath, int maxConcurrency = 50)
         {
             Console.WriteLine($"Reading products from {filePath} ...");
             var json = await File.ReadAllTextAsync(filePath);
@@ -154,7 +154,7 @@ namespace Cosmos
                     {
                         try
                         {
-                            await _dbService.CreateBulkItemsAsync(product);
+                            await _dbService.CreateItemAsync(product);
                             Interlocked.Increment(ref CreatesSucceeded);
                         }
                         catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.TooManyRequests)

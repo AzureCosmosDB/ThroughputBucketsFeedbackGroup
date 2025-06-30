@@ -56,7 +56,7 @@ namespace Cosmos
 
 		public async Task<int> GetMaxIdAsync()
 		{
-			QueryDefinition queryDefinition = new QueryDefinition("SELECT max(c.Id) as maxId FROM c");
+			QueryDefinition queryDefinition = new QueryDefinition("SELECT max(c.id) as maxId FROM c");
 			FeedIterator<dynamic> feedIterator = _container.GetItemQueryIterator<dynamic>(queryDefinition);
 			int maxId = 0;
 			while (feedIterator.HasMoreResults)

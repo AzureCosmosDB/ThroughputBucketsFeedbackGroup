@@ -18,16 +18,16 @@ namespace Quickstarts
             Console.WriteLine(useThroughputBucket ? "[Info] Running with throughput buckets enabled." : "[Info] Running without throughput buckets.");
 
             var dbServiceReads = new CosmosDbService(config.EndpointUrl, config.DatabaseId, config.ContainerId);
-            var loadExecutorReads = new LoadExecutor(dbServiceReads);
+            var loadExecutor = new LoadExecutor(dbServiceReads);
             var dbServiceBulk = new CosmosDbService(config.EndpointUrl, config.DatabaseId, config.ContainerId, allowBulk: true, throughputBucket: useThroughputBucket ? 1 : (int?)null);
             var loadExecutorBulk = new LoadExecutor(dbServiceBulk);
 
             if (uploadChoice == 1)
-                await loadExecutorBulk.UploadProductsFromFileAsync("data/products.json", config.MaxInsertConcurrency);
+                await loadExecutor.UploadProductsFromFileAsync("data/products.json");
             else
                 Console.WriteLine("[Info] Skipping data upload.");
 
-            await RunWorkload(loadExecutorReads, loadExecutorBulk, config);
+            await RunWorkload(loadExecutor, loadExecutorBulk, config);
         }
 
         private static async Task RunWorkload(LoadExecutor loadExecutorReads, LoadExecutor loadExecutorBulk, AppConfig config)
@@ -39,13 +39,13 @@ namespace Quickstarts
             Console.WriteLine("Running point reads and bulk creates concurrently");
             while (stopwatch.Elapsed < runDuration)
             {
-                var bulkTasks = new List<Task>
+                var tasks = new List<Task>
             {
                 loadExecutorReads.RunPointReadsAsync(totalReads: config.TotalReads, maxConcurrency: config.MaxReadConcurrency),
                 loadExecutorBulk.RunBulkInsertAsync(totalDocs: config.TotalCreates, maxConcurrency: config.MaxInsertConcurrency)
             };
-                await Task.WhenAll(bulkTasks);
-                await Task.Delay(100);
+            await Task.WhenAll(tasks);
+            await Task.Delay(100);
             }
             Console.WriteLine("All concurrent operations completed.");
             cts.Cancel();
