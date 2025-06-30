@@ -13,6 +13,6 @@ Read the [official documentation](https://learn.microsoft.com/azure/cosmos-db/no
 
 Follow the instructions to [create and manage](https://learn.microsoft.com/azure/cosmos-db/nosql/throughput-buckets?tabs=dotnet#configuring-throughput-buckets) throughput buckets.
 
-## Quickstart Sample
+## Quickstart sample
 
 - [Dotnet](samples/dotnet/README.md)

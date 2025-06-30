@@ -1,5 +1,5 @@
 
-# Cosmos DB Throughput Buckets Quickstart (C#)
+# Azure Cosmos DB Throughput buckets quickstart (C#)
 
 This repository provides quickstart samples for using the **Throughput Buckets** feature in Azure Cosmos DB, demonstrating both request-level and bulk API usage. The samples are designed to help you understand and test how throughput buckets can be leveraged for high-throughput, cost-efficient workloads.
 
@@ -20,26 +20,26 @@ This repository provides quickstart samples for using the **Throughput Buckets**
 All connection and workload parameters are set in `App.Config`.
 > **Tip:** Adjust these values to match your Cosmos DB setup and desired workload.
 
-## How to Run
+## How to run
 
-### 1. Build the Project
+### 1. Build the project
 
 ```sh
 # In the project root
  dotnet build
 ```
 
-### 2. Run a Sample
+### 2. Run a sample
 
 You can run either sample by specifying the class name as the entry point:
 
-#### Bulk API Sample
+#### Bulk API sample
 
 ```sh
 dotnet run --project bucketing-sample.csproj --no-build --no-launch-profile -- Quickstarts.ThroughputBucketBulkQuickstart
 ```
 
-#### Request-level Throughput Bucket Sample
+#### Request-level Throughput bucket sample
 
 ```sh
 dotnet run --project bucketing-sample.csproj --no-build --no-launch-profile -- Quickstarts.ThroughputBucketQuickstart
