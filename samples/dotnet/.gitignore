@@ -1,0 +1,80 @@
+## Ignore Visual Studio temporary files, build results, and
+## user-specific files
+
+# Build results
+bin/
+obj/
+[Ll]og/
+[Bb]uild/
+[Bb]uild[Ll]og.*
+bin/[Dd]ebug/*
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# VS Code settings
+.vscode/
+
+# DotCover
+*.dotCover
+
+# ASP.NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio 2019/2022 cache/options
+.vs/
+.vssln
+
+# Npm
+node_modules/
+wwwroot/lib/
+dist/
+npm-debug.log
+
+# NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+.nuget/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Azure Pipelines
+.azure-pipelines/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
+*.trx
+
+# Logs
+*.log
+
+# Others
+*.dbmdl
+*.bak
+*.orig
+*.swp
+*.tmp
+
+# Dotnet watch/Hot reload
+*.hotreload
+
+# EF Core Migrations snapshots
+**/*Snapshot.cs
