@@ -106,41 +106,31 @@ def log_stats(all_stats, basic_tenants, premium_tenants):
     basic_stats = [s for s in all_stats if s["tenant"] in basic_tenants]
     premium_stats = [s for s in all_stats if s["tenant"] in premium_tenants]
 
+    # Calculate basic tenant statistics
     total_basic_success = sum(s["success"] for s in basic_stats)
     total_basic_throttled = sum(s["throttled"] for s in basic_stats)
+    total_basic_operations = total_basic_success + total_basic_throttled
     basic_throttled_percentage = (
-        round(
-            total_basic_throttled
-            * 1.0
-            / (total_basic_success + total_basic_throttled)
-            * 100,
-            2,
-        )
-        if (total_basic_success + total_basic_throttled) > 0
-        else 0
-    )
-    logger.info(f"[Read Simulation] Results Summary:")
-    logger.info(
-        f"  [Basic Tenants] Successful: {total_basic_success}, Throttled: {total_basic_throttled}, Throttling rate: {basic_throttled_percentage}%"
+        total_basic_throttled * 1.0 / total_basic_operations * 100 if total_basic_operations > 0 else 0
     )
 
+    # Calculate premium tenant statistics
     total_premium_success = sum(s["success"] for s in premium_stats)
     total_premium_throttled = sum(s["throttled"] for s in premium_stats)
+    total_premium_operations = total_premium_success + total_premium_throttled
     premium_throttled_percentage = (
-        round(
-            total_premium_throttled
-            * 1.0
-            / (total_premium_success + total_premium_throttled)
-            * 100,
-            2,
-        )
-        if (total_premium_success + total_premium_throttled) > 0
-        else 0
-    )
-    logger.info(
-        f"  [Premium Tenants] Successful: {total_premium_success}, Throttled: {total_premium_throttled}, Throttling rate: {premium_throttled_percentage}%"
+        total_premium_throttled * 1.0 / total_premium_operations * 100 if total_premium_operations > 0 else 0
     )
 
-
-if __name__ == "__main__":
-    asyncio.run(simulate_product_searches())
+    # Log comprehensive performance summary
+    logger.info(f"  [Basic Tenant Details]:")
+    logger.info(f"    - Total operations: {total_basic_operations}")
+    logger.info(f"    - Successful queries: {total_basic_success}")
+    logger.info(f"    - Throttled queries: {total_basic_throttled}")
+    logger.info(f"    - Throttling rate: {basic_throttled_percentage:.2f}%")
+    logger.info(f"")
+    logger.info(f"  [Premium Tenant Details]:")
+    logger.info(f"    - Total operations: {total_premium_operations}")
+    logger.info(f"    - Successful queries: {total_premium_success}")
+    logger.info(f"    - Throttled queries: {total_premium_throttled}")
+    logger.info(f"    - Throttling rate: {premium_throttled_percentage:.2f}%")

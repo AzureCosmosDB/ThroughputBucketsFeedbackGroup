@@ -1,6 +1,10 @@
-COSMOS_DB_URI = "https://cosmos-account.documents.azure.com:443/"
-# TODO: Set your Cosmos DB primary or secondary key here
-COSMOS_DB_KEY = ""
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+COSMOS_DB_URI = "https://cosmos-retail-db.documents.azure.com:443/"
+COSMOS_DB_KEY = os.getenv("COSMOS_DB_KEY", "your_cosmos_db_key_here")
 DATABASE_NAME = "ContosoMarketplace"
 CONTAINER_NAME = "ProductCatalog"
 # Hierarchical partition key
