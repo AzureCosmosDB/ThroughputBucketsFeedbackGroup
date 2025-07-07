@@ -95,9 +95,7 @@ async def simulate_product_searches(throughput_bucket=None, num_queries=50):
         all_stats = await asyncio.gather(*tasks)
         
         execution_time = time.time() - start
-        queries_per_second = total_tasks / execution_time if execution_time > 0 else 0
-        
-        logger.info(f"[Read Simulation] Completed all queries in {execution_time:.2f} seconds ({queries_per_second:.2f} queries/sec)")
+        logger.info(f"[Read Simulation] Completed all queries in {execution_time:.2f} seconds")
         log_stats(all_stats, basic_tenants, premium_tenants)
 
 

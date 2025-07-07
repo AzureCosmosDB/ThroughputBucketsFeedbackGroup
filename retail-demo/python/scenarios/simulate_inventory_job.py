@@ -27,9 +27,7 @@ async def insert_product(container, product, stats, lock):
         logger.error(f"[Inventory Job] Unexpected error inserting product {product.id}: {str(e)}")
 
 
-async def execute_bulk_inventory_update(
-    throughputBucket=None, docs_to_insert=1000, max_concurrency=30
-):
+async def execute_bulk_inventory_update(throughputBucket=None, docs_to_insert=1000, max_concurrency=30):
     async with create_cosmos_client_with_bucket(throughputBucket) as client:
         container = client.get_database_client(DATABASE_NAME).get_container_client(
             CONTAINER_NAME

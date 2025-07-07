@@ -17,7 +17,7 @@ async def main():
             input(
                 "Select simulation scenario (1 or 2):\n"
                 "1: Multi-tenant product search workload\n"
-                "2: Concurrent inventory updates with customer searches\n"
+                "2: Concurrent inventory updates with product searches\n"
             )
         )
         if scenario not in [1, 2]:
