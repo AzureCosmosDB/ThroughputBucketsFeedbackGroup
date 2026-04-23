@@ -1,0 +1,12 @@
+database:
+  endpoint: https://cosmos-retail-db.documents.azure.com:443/
+  database: ProductRecommendation
+  container: ProductCatalog2
+workload:
+  totalReads: 1000
+  totalQueries: 100
+  totalCreates: 500
+  maxReadConcurrency: 100
+  maxQueryConcurrency: 100
+  maxBulkInsertConcurrency: 50 
+  runDurationInSecs: 10

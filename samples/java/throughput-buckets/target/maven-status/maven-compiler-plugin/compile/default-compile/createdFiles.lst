@@ -1,0 +1,7 @@
+com\azure\cosmosdb\AppConfig.class
+com\azure\cosmosdb\LoadExecutor.class
+com\azure\cosmosdb\quickstarts\ThroughputBucketQuickstart.class
+com\azure\cosmosdb\models\Product.class
+com\azure\cosmosdb\AppConfig$Database.class
+com\azure\cosmosdb\AppConfig$Workload.class
+com\azure\cosmosdb\cosmos\CosmosDBService.class
