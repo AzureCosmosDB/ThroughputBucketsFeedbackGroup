@@ -4,7 +4,7 @@ import itertools
 from azure.cosmos.exceptions import CosmosHttpResponseError
 from configs.config import DATABASE_NAME, CONTAINER_NAME
 from models.product import get_all_product_types
-from models.tenant_sku_mapping import get_basic_sku_tenants, get_premium_sku_tenants
+from models.tenant_sku_mapping import get_standard_sku_tenants, get_premium_sku_tenants
 from core.client_factory import create_cosmos_client
 from core.logging_config import get_logger
 
@@ -32,7 +32,7 @@ async def execute_query(container, tenant, is_premium, throughput_bucket, produc
         if e.status_code == 429:
             throttled += 1
             logger.debug(
-                f"[Read Simulation] Throttled (429): {'Premium' if is_premium else 'Basic'} tenant {tenant}, product type {product_type}"
+                f"[Read Simulation] Throttled (429): {'Premium' if is_premium else 'standard'} tenant {tenant}, product type {product_type}"
             )
         else:
             logger.error(
@@ -53,13 +53,13 @@ async def simulate_product_searches(throughput_bucket=None, num_queries=50):
         db = client.get_database_client(DATABASE_NAME)
         container = db.get_container_client(CONTAINER_NAME)
 
-        basic_tenants = get_basic_sku_tenants()
+        standard_tenants = get_standard_sku_tenants()
         premium_tenants = get_premium_sku_tenants()
         product_types = get_all_product_types()
         
         bucket_info = f" using throughput bucket {throughput_bucket}" if throughput_bucket else " without throughput buckets"
         logger.info(f"[Read Simulation] Starting multi-tenant query simulation{bucket_info}")
-        logger.info(f"[Read Simulation] Configuration - Basic tenants: {len(basic_tenants)}, Premium tenants: {len(premium_tenants)}")
+        logger.info(f"[Read Simulation] Configuration - standard tenants: {len(standard_tenants)}, Premium tenants: {len(premium_tenants)}")
         logger.info(f"[Read Simulation] Product types: {len(product_types)}, Queries per tenant-type: {num_queries}")
         
         start = time.time()
@@ -72,8 +72,8 @@ async def simulate_product_searches(throughput_bucket=None, num_queries=50):
         #         return await single_query(*args, **kwargs)
 
         # Flattened task creation using itertools.product
-        basic_combos = itertools.product(
-            basic_tenants, product_types, range(num_queries)
+        standard_combos = itertools.product(
+            standard_tenants, product_types, range(num_queries)
         )
         premium_combos = itertools.product(
             premium_tenants, product_types, range(num_queries)
@@ -83,33 +83,33 @@ async def simulate_product_searches(throughput_bucket=None, num_queries=50):
             for (tenant, type, i) in premium_combos
         ] + [
             execute_query(container, tenant, False, throughput_bucket, type)
-            for (tenant, type, i) in basic_combos
+            for (tenant, type, i) in standard_combos
         ]
         
         total_tasks = len(tasks)
-        basic_task_count = len(basic_tenants) * len(product_types) * num_queries
+        standard_task_count = len(standard_tenants) * len(product_types) * num_queries
         premium_task_count = len(premium_tenants) * len(product_types) * num_queries
         
-        logger.info(f"[Read Simulation] Executing {total_tasks} concurrent queries (Basic: {basic_task_count}, Premium: {premium_task_count})")
+        logger.info(f"[Read Simulation] Executing {total_tasks} concurrent queries (standard: {standard_task_count}, Premium: {premium_task_count})")
         
         all_stats = await asyncio.gather(*tasks)
         
         execution_time = time.time() - start
         logger.info(f"[Read Simulation] Completed all queries in {execution_time:.2f} seconds")
-        log_stats(all_stats, basic_tenants, premium_tenants)
+        log_stats(all_stats, standard_tenants, premium_tenants)
 
 
-def log_stats(all_stats, basic_tenants, premium_tenants):
-    # Separate stats for basic and premium
-    basic_stats = [s for s in all_stats if s["tenant"] in basic_tenants]
+def log_stats(all_stats, standard_tenants, premium_tenants):
+    # Separate stats for standard and premium
+    standard_stats = [s for s in all_stats if s["tenant"] in standard_tenants]
     premium_stats = [s for s in all_stats if s["tenant"] in premium_tenants]
 
-    # Calculate basic tenant statistics
-    total_basic_success = sum(s["success"] for s in basic_stats)
-    total_basic_throttled = sum(s["throttled"] for s in basic_stats)
-    total_basic_operations = total_basic_success + total_basic_throttled
-    basic_throttled_percentage = (
-        total_basic_throttled * 1.0 / total_basic_operations * 100 if total_basic_operations > 0 else 0
+    # Calculate standard tenant statistics
+    total_standard_success = sum(s["success"] for s in standard_stats)
+    total_standard_throttled = sum(s["throttled"] for s in standard_stats)
+    total_standard_operations = total_standard_success + total_standard_throttled
+    standard_throttled_percentage = (
+        total_standard_throttled * 1.0 / total_standard_operations * 100 if total_standard_operations > 0 else 0
     )
 
     # Calculate premium tenant statistics
@@ -121,11 +121,11 @@ def log_stats(all_stats, basic_tenants, premium_tenants):
     )
 
     # Log comprehensive performance summary
-    logger.info(f"  [Basic Tenant Details]:")
-    logger.info(f"    - Total operations: {total_basic_operations}")
-    logger.info(f"    - Successful queries: {total_basic_success}")
-    logger.info(f"    - Throttled queries: {total_basic_throttled}")
-    logger.info(f"    - Throttling rate: {basic_throttled_percentage:.2f}%")
+    logger.info(f"  [Standard Tenant Details]:")
+    logger.info(f"    - Total operations: {total_standard_operations}")
+    logger.info(f"    - Successful queries: {total_standard_success}")
+    logger.info(f"    - Throttled queries: {total_standard_throttled}")
+    logger.info(f"    - Throttling rate: {standard_throttled_percentage:.2f}%")
     logger.info(f"")
     logger.info(f"  [Premium Tenant Details]:")
     logger.info(f"    - Total operations: {total_premium_operations}")

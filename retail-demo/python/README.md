@@ -14,7 +14,7 @@ This retail demo demonstrates how Azure Cosmos DB Throughput Buckets can:
 This demo simulates a **multi-tenant retail marketplace** with:
 
 - **Premium Tenants**: Contoso Marketplace offers premium features like better throughput and availability to Premium sku tenants at added cost.
-- **Basic Tenants**: Contoso Marketplace offers standard marketplace platform to basic sku tenants.
+- **Standard Tenants**: Contoso Marketplace offers standard marketplace platform to standard sku tenants.
 
 - **Background Inventory Jobs**: Different tenants run bulk inventory updates which affect end consumer's product experience due to high throughput usage.
 
@@ -31,7 +31,7 @@ retail-demo/python/
 │   └── client_factory.py             # Cosmos DB client with throughput bucket support
 ├── models/
 │   ├── product.py                    # Product data model and generation
-│   └── tenant.py                     # Tenant SKU mapping (basic/premium)
+│   └── tenant.py                     # Tenant SKU mapping (standard/premium)
 ├── scenarios/
 │   ├── simulate_reads.py             # Multi-tenant read simulation
 │   └── simulate_inventory_job.py     # Background inventory job simulation
@@ -82,13 +82,13 @@ retail-demo/python/
 **What happens**:
 
 - Premium tenants query products without restrictions
-- Basic tenants use throughput bucket with configured max limit
+- Standard tenants use throughput bucket with configured max limit
 - Measures throttling impact on different tenant tiers
 - Shows how buckets prevent one tenant from monopolizing resources
 
 **Expected outcome**:
 
-- Both basic and premium sku tenants experience throttling without throughput buckets.
+- Both standard and premium sku tenants experience throttling without throughput buckets.
 - Premium tenants observe better performance characteristics when throughput buckets are enabled.
 
 ### Scenario 2: Background Inventory Job Isolation
@@ -116,7 +116,7 @@ retail-demo/python/
 ```python
 # configs/config.py
 CONTAINER_THROUGHPUT = 400                    # Total RU/s for container
-BASIC_TENANTS_THROUGHPUT_BUCKET = 2           # Bucket for basic tenants (50% limit)
+STANDARD_TENANTS_THROUGHPUT_BUCKET = 2           # Bucket for standard tenants (50% limit)
 INVENTORY_JOB_THROUGHPUT_BUCKET = 1           # Bucket for inventory jobs (10% limit)
 ```
 
@@ -140,14 +140,14 @@ INVENTORY_JOB_CONCURRENCY = 30                # Concurrent insert operations
 ### Sample Output
 
 ```text/plain
-[Basic] Successful requests: 750, Throttled: 50, Throttling percentage: (6.25%)
+[Standard] Successful requests: 750, Throttled: 50, Throttling percentage: (6.25%)
 [Premium] Successful requests: 300, Throttled: 0, Throttling percentage: (0.0%)
 ```
 
 ### What This Means
 
 - **Without buckets**: All tenants compete equally, unpredictable performance
-- **With buckets**: Basic tenants limited, premium tenants protected, improved performance characteristic for priority requests.
+- **With buckets**: standard tenants limited, premium tenants protected, improved performance characteristic for priority requests.
 
 ### Modifying Simulation Load
 

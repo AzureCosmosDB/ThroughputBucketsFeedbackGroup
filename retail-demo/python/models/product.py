@@ -58,7 +58,7 @@ class Product:
         ).strip()
         Price = round(random.uniform(10, 500), 2)
         tenant = tenant if tenant is not None else f"tenant_{random.randint(1, 10)}"
-        sku = sku if sku is not None else random.choice(["basic", "premium"])
+        sku = sku if sku is not None else random.choice(["standard", "premium"])
         return Product(id, Type, Brand, Name, Description, Price, tenant, sku)
 
     def to_dict(self):

@@ -64,7 +64,7 @@ async def run_simulation(use_throughput_buckets, scenario):
 
         num_queries = NUM_QUERIES
         throughput_bucket = (
-            BASIC_TENANTS_THROUGHPUT_BUCKET if use_throughput_buckets else None
+            STANDARD_TENANTS_THROUGHPUT_BUCKET if use_throughput_buckets else None
         )
         await simulate_product_searches(throughput_bucket, num_queries)
 
@@ -82,7 +82,7 @@ async def run_simulation(use_throughput_buckets, scenario):
                 docs_to_insert=INVENTORY_JOB_DOCS_TO_INSERT,
                 max_concurrency=INVENTORY_JOB_CONCURRENCY,
             ),
-            simulate_product_searches(num_queries=num_queries),
+            simulate_product_searches(throughput_bucket, num_queries=num_queries),
         )
 
 
