@@ -9,7 +9,7 @@
   <properties>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <exec.mainClass>com.azure.cosmos.samples.ClientLevelBulkQuickstart</exec.mainClass>
+    <exec.mainClass>com.azure.cosmos.samples.RequestLevelBucketQuickstart</exec.mainClass>
   </properties>
   <dependencies>
     <dependency>
