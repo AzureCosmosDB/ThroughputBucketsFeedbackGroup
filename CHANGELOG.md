@@ -1,11 +1,11 @@
 # Changelog
 
-## Java and JavaScript throughput bucket quickstarts (2026-11-25)
+## Java and JavaScript throughput bucket bulk quickstarts (2026-11-25)
 
 ### Added
 
-- Runnable Java and JavaScript quickstarts demonstrating request-level and
-  default bucket assignment, authenticated with `DefaultAzureCredential`.
-- Focused unit tests and live E2E commands verifying isolated product creation,
-  reads, queries, replacement, and cleanup with actual container partition keys.
-- Setup guidance, SDK dependencies, and links from the root sample index.
+- Two standalone examples per language showing client/default bucket assignment
+  and request-level bucket assignment on the entire SDK bulk call.
+- Separate tests for bulk bucket routing, live bulk creation, readback, and cleanup.
+- Short setup guides linking directly to the scenario methods, pinned SDK
+  dependencies, and links from the root sample index.
