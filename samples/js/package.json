@@ -1,0 +1,18 @@
+{
+  "name": "cosmos-throughput-bucket-quickstart",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node throughput-bucket-quickstart.js",
+    "test": "node --test",
+    "test:e2e": "node throughput-bucket-quickstart.js"
+  },
+  "dependencies": {
+    "@azure/cosmos": "4.10.2",
+    "@azure/identity": "4.14.1"
+  }
+}

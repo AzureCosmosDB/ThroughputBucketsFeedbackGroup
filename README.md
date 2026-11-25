@@ -16,3 +16,5 @@ Follow the instructions to [create and manage](https://learn.microsoft.com/azure
 ## Quickstart sample
 
 - [Dotnet](samples/dotnet/README.md)
+- [Java](samples/java/README.md)
+- [JavaScript](samples/js/README.md)
